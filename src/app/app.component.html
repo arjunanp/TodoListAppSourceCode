@@ -1,0 +1,141 @@
+<div *ngIf="mobile">
+    <div class="col-12 dsplayFlx">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12"></div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+            <mat-toolbar class="background--black">
+                <mat-toolbar-row>
+                    <img src="assets/logoipsum-logo-8.svg" alt="logo" />
+                    <span class="example-spacer"></span>
+                    <div id="mySidepanel" class="sidepanel">
+                        <a (click)="changedevice()">DESKTOP</a>
+                        <a>LINK TWO</a>
+                        <a>LINK THREE</a>
+                    </div>
+                    <div *ngIf="clickOnSideNav">
+                        <button mat-icon-button class="example-icon openbtn border-background-none" (click)="openNav()">
+                            <mat-icon>menu</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="!clickOnSideNav">
+                        <button mat-icon-button class="example-icon border-background-none closebtn color-white" (click)="closeNav()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <div class="col-12 margi--padding-style box-shadow--style height-100">
+                <div class="col-12 dsplayFlx margi--padding-style">
+                    <div class="col-12 mat-tle-style padding-style-1">
+                        To Do List
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="dsplayFlx col-12 box-style-2" *ngFor="let data of todoList;index as i">
+                        <div (click)="openeditMode(i)" class="dsplayFlx rowdata">
+                            <mat-checkbox [(ngModel)]="data.selected"></mat-checkbox>
+                            <div *ngIf="data.createmode === true || data.editmode === true">
+                                <input type="text" [(ngModel)]="data.description" class="border--none margin-style-2" placeholder="Start typing" (keydown.enter)="submitRowdata(i,data.description)">
+                            </div>
+                            <div class="margin-style-2" *ngIf="data.createmode != true && data.editmode === false">
+                                <span>{{ data.description }}</span></div>
+                            <div *ngIf="data.editmode === true && data.createmode != true" class="dsplayFlx">
+                                <span class="material-icons edit--button" (click)="editRow(i)">
+                                    mode_edit
+                                </span>
+                                <span class="material-icons delete--button" (click)="deleteRow(i)">
+                                    delete
+                                </span>
+                            </div>
+                            <div *ngIf="data.createmode === true" class="dsplayFlx">
+
+                                <span class="material-icons delete--button" (click)="deleteRow(i)">
+                                    delete
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <button mat-fab color="primary" id="add-button" matTooltip="Add To Do List" (click)="addNewTodo()">
+                        <span class="material-icons material--icon-style">
+                            add_circle
+                        </span>
+                    </button>
+                </div>
+                <div class="col-12">
+                    <div class="dsplayFlx col-12 box-style-2" *ngFor="let dataarr of doneList">
+                        <mat-checkbox [(ngModel)]="dataarr.selected"></mat-checkbox>
+                        <div class="margin-style-2"><span>{{ dataarr.description }}</span></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!mobile" class="container-body height--100">
+    <mat-toolbar class="color--black">
+        <mat-toolbar-row>
+            <img src="assets/logoipsum-logo-8.svg" alt="logo" class="width--10" />
+            <span class="example-spacer"></span>
+            <button mat-button class="button-header-style" (click)="changedevice()">MOBILE</button>
+            <button mat-button class="button-header-style margin--left-1-5">LINK TWO</button>
+            <button mat-button class="button-header-style margin--left-1-5">LINK THREE</button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div class="col-12 dsplayFlx margi--padding-style">
+        <div class="col-4 border--header-style-1 border--header-style-2 mat-tle-style padding-style-1">
+            To Do List
+        </div>
+        <div class="col-4 border--header-style-1 border--header-style-2 mat-tle-style padding-style-1">
+            Done
+        </div>
+        <div class="col-4 border--header-style-1 padding-style-1">
+            &nbsp;
+        </div>
+    </div>
+    <div class="col-12 dsplayFlx margi--padding-style height--82">
+        <div class="col-4 border--header-style-2">
+            <div class="dsplayFlx col-12 box--style" *ngFor="let data of todoList;index as i">
+                <div (click)="openeditMode(i)" class="dsplayFlx rowdata">
+                    <mat-checkbox [(ngModel)]="data.selected"></mat-checkbox>
+                    <div *ngIf="data.createmode === true || data.editmode === true">
+                        <input type="text" [(ngModel)]="data.description" class="border--none margin-style-2" placeholder="Start typing" (keydown.enter)="submitRowdata(i,data.description)">
+                    </div>
+                    <div class="margin-style-2" *ngIf="data.createmode != true && data.editmode === false"><span>{{
+                            data.description }}</span></div>
+                    <div *ngIf="data.editmode === true && data.createmode != true" class="dsplayFlx">
+                        <span class="material-icons edit--button" (click)="editRow(i)">
+                            mode_edit
+                        </span>
+                        <span class="material-icons delete--button" (click)="deleteRow(i)">
+                            delete
+                        </span>
+                    </div>
+                    <div *ngIf="data.createmode === true" class="dsplayFlx">
+
+                        <span class="material-icons delete--button" (click)="deleteRow(i)">
+                            delete
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-4 border--header-style-2">
+            <div class="dsplayFlx col-12 box--style" *ngFor="let dataarr of doneList">
+                <mat-checkbox [(ngModel)]="dataarr.selected"></mat-checkbox>
+                <div class="margin-style-2"><span>{{ dataarr.description }}</span></div>
+            </div>
+        </div>
+        <div class="col-4">
+            <button mat-fab color="primary" id="add-button" matTooltip="Add To Do List" (click)="addNewTodo()">
+                <span class="material-icons material--icon-style">
+                    add_circle
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
